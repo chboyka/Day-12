@@ -2,6 +2,7 @@ var boy = document.getElementById('boy');
 var box = document.getElementById('box');
 var boxStyle = getComputedStyle(box);
 var boyStyle = getComputedStyle(boy);
+var boyDeadStatus = false;
 
 var idle = setInterval(boyIdle,200);
 var run = setInterval(boyIdle,200);
@@ -21,23 +22,26 @@ var deadNum = 3;
 
 
 function getEvents(event){
-    switch(event.key){
-        case "Enter":
-            clearInterval(jump);
-            clearInterval(run);
-            clearInterval(idle);
-            clearInterval(boxMove);
-            run = setInterval(boyRun,200);
-            boxMove = setInterval(boxAnimation,200);
-            break;
-        case " ":
-            clearInterval(jump);
-            clearInterval(run);
-            clearInterval(idle);
-            clearInterval(boxMove);
-            jump = setInterval(boyJump,200);
-            boxMove = setInterval(boxAnimation,200);
-            break;
+    if(!boyDeadStatus){
+
+        switch(event.key){
+            case "Enter":
+                clearInterval(jump);
+                clearInterval(run);
+                clearInterval(idle);
+                clearInterval(boxMove);
+                run = setInterval(boyRun,200);
+                boxMove = setInterval(boxAnimation,200);
+                break;
+            case " ":
+                clearInterval(jump);
+                clearInterval(run);
+                clearInterval(idle);
+                clearInterval(boxMove);
+                jump = setInterval(boyJump,200);
+                boxMove = setInterval(boxAnimation,200);
+                break;
+        }
     }
 
 }
@@ -88,7 +92,10 @@ function boxAnimation(){
         clearInterval(idle);
         clearInterval(boxMove);
         dead = setInterval(boyDead,200);
+        boyDeadStatus = true;
     }
-    box.style.marginLeft = boxMarginLeft + 'px';
+    else{
+        box.style.marginLeft = boxMarginLeft + 'px';
+    }
 }
 
